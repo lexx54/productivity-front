@@ -1,9 +1,11 @@
-import {Box,Center,Input,Button, } from "@chakra-ui/react";
+import {Box,Text, Input ,Button, VStack, } from "@chakra-ui/react";
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { EmailIcon, EditIcon } from '@chakra-ui/icons'
 //components
 import Password from "../components/Password";
 import AlertMessage from "../components/AlertMessage";
+import NormalInput from "../components/NormalInput";
 
 import services from "../services";
 
@@ -33,36 +35,34 @@ const Register = () => {
     
   };
   return(
-    <Center border="1px" borderColor="red" h="100%">
-      {/* {errorMessage && <Alert>
-        <AlertIcon/>
-        <AlertTitle>{errorMessage}</AlertTitle>
-      </Alert>} */}
-
-      <Box as="form" width={["80%",null,"600px"]} border="2px" 
-      borderColor="green" height="600px" my="3rem" borderRadius="10px"
+    <VStack h="100%">
+      <Box my="5">
+        <Text fontSize="2rem">Register</Text>
+      </Box>
+      <Box as="form" width={["80%",null,"400px"]} border="2px" 
+      borderColor="brand.lava" py="5" px="3" borderRadius="10px"
       onSubmit={handleSubmit(onSubmit)}>
         <Controller control={control} name="name" rules={{ required: true }}
-          render={({field})=><Input variant="flushed" placeholder="Full Name" {...field} />}/>
+          render={({field})=><NormalInput placeholder="Full Name" data={field} Component={EditIcon}/>}/>
         {errors.name && <AlertMessage message={errors.name.message}/>}
         
         <Controller control={control} name="user" rules={{ required: true }}
-          render={({field})=><Input variant="flushed" placeholder="User Name" {...field} />}/>
+          render={({field})=><NormalInput placeholder="User Name" data={field} Component={EditIcon}/>}/>
         {errors.user && <AlertMessage message={errors.user.message} />}
         
         <Controller control={control} name="email"
-          render={({field})=><Input variant="flushed" placeholder="Email" {...field}/>}/>
+          render={({field})=><NormalInput placeholder="Email" data={field} Component={EmailIcon}/>}/>
         {errors.email && <AlertMessage message={errors.email.message} />}
 
         <Controller control={control} name="password"
           render={({field})=><Password data={field} />}/>
         {errors.password && <AlertMessage message={errors.password.message} />}
 
-        <Button type="submit">
+        <Button type="submit" mt="4">
           Submit
         </Button>
       </Box>
-    </Center>
+    </VStack>
     
   )
 }

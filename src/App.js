@@ -10,6 +10,10 @@ import Register from "./pages/Register";
 import { Grid, GridItem, Slide, useDisclosure, Button } from "@chakra-ui/react";
 import { HamburgerIcon } from '@chakra-ui/icons'
 
+//colorp Palette
+//red.500 red.300
+//blue.400
+//brand.lava brand.alabaster brand.silver
 
 
 const App = () => {
@@ -25,9 +29,9 @@ const App = () => {
         <HamburgerIcon/>
     </Button>
 
-    <Grid border="5px" borderColor="green" templateColumns="1fr" 
+    <Grid border="5px" bg="brand.alabaster" templateColumns="1fr" 
     templateRows="1fr 20%" gap="0" minHeight="100vh">
-      <GridItem>
+      <GridItem pb="5">
       <Switch>
         <Route exact path="/" component={Home}/>
         <Route path="/profile" component={Profile}/>

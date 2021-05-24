@@ -2,7 +2,7 @@ import {Box} from "@chakra-ui/react";
 
 const Footer = () => {
   return(
-    <Box border="1px" borderColor="yellow" h="100%">
+    <Box h="100%" bg="brand.lava" color="brand.alabaster">
       <p>Footer</p>
     </Box>
     
