@@ -10,8 +10,12 @@ const Navegation = () => {
       <Button variant="link" colorScheme="whiteAlpha" as="a" href="/">
         Home
       </Button>
-      <Button variant="outline" colorScheme="whiteAlpha" as="a" href="/register">
-        Get In
+      <Button variant="link" colorScheme="whiteAlpha" as="a" href="/register">
+        Sign up
+      </Button>
+
+      <Button variant="outline" colorScheme="whiteAlpha" as="a" href="/login">
+        Sign In
       </Button>
 
 

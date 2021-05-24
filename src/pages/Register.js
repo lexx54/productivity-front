@@ -1,5 +1,4 @@
-import {Box,Text, Input ,Button, VStack, } from "@chakra-ui/react";
-import { useState } from "react";
+import {Box,Heading, Button, VStack, Center, } from "@chakra-ui/react";
 import { useForm, Controller } from "react-hook-form";
 import { EmailIcon, EditIcon } from '@chakra-ui/icons'
 //components
@@ -37,8 +36,9 @@ const Register = () => {
   return(
     <VStack h="100%">
       <Box my="5">
-        <Text fontSize="2rem">Register</Text>
+        <Heading size="2xl">Register</Heading>
       </Box>
+
       <Box as="form" width={["80%",null,"400px"]} border="2px" 
       borderColor="brand.lava" py="5" px="3" borderRadius="10px"
       onSubmit={handleSubmit(onSubmit)}>
@@ -58,9 +58,15 @@ const Register = () => {
           render={({field})=><Password data={field} />}/>
         {errors.password && <AlertMessage message={errors.password.message} />}
 
-        <Button type="submit" mt="4">
-          Submit
+        <Button type="submit" mt="4" colorScheme="blackAlpha" size="sm">
+          Sign Up
         </Button>
+        <Center mt="2">
+        <Button colorScheme="linkedin" variant="link" href="/login" as="a">
+          Do you have an account?
+        </Button>
+        </Center>
+        
       </Box>
     </VStack>
     
