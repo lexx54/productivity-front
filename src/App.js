@@ -26,9 +26,7 @@ const App = () => {
   const {isOpen, onToggle} = useDisclosure();
 
   //functions
-  const logOut = () => {
-    userServices.logOut();
-  };
+
 
   useEffect(()=>{
     const response = userServices.getUserData();
@@ -38,7 +36,7 @@ const App = () => {
   return (
   <Router >
     <Slide direction="left" in={isOpen} style={{ zIndex: 10 }}>
-      <Navegation logOut={logOut} user={currentUser}/>
+      <Navegation user={currentUser}/>
     </Slide>
 
     <Button colorScheme="red" onClick={onToggle} 
@@ -53,7 +51,6 @@ const App = () => {
           <Switch>
             <Route exact path="/" component={Home}/>
             <Route exact path="/profile" component={Profile} />
-
             <Route path="/register" component={Register}/>
             <Route path="/login" component={SignIn}/>
           </Switch>

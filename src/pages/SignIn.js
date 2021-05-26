@@ -1,8 +1,9 @@
-import {Box,Heading, Button, VStack, Center,Alert ,AlertDescription} from "@chakra-ui/react";
-import {Redirect} from "react-router-dom";
+import { useState } from "react";
+import {Box,Heading, Button, VStack, Center,Alert ,AlertDescription, Spinner} from "@chakra-ui/react";
 import { useForm, Controller } from "react-hook-form";
 import { EditIcon } from '@chakra-ui/icons';
-
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
 
 //components
 import Password from "../components/Password";
@@ -11,11 +12,6 @@ import NormalInput from "../components/NormalInput";
 
 import services from "../services/auth.service";
 
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from "yup";
-import { useState } from "react";
-import logger from "../utils/logger";
-
 const schema = yup.object().shape({
   user: yup.string().required().min(3).max(10),
   password: yup.string().required().min(3).max(8),
@@ -23,17 +19,22 @@ const schema = yup.object().shape({
 
 const SignIn = ({history}) => {
   const [errorMessage , setErrorMessage] = useState("");
-  // const [userLogged, setUserLogged]=useState(false)
+  const [loading, setLoading] = useState(false);
   const {handleSubmit,control,formState:{errors}}=useForm({
     resolver: yupResolver(schema)
   });
+
+  //functions
   const onSubmit =  async (data) => {
+    setLoading(true)
     try{
       const response = await services.signInUser(data);
       if(response){
         history.push("/profile");
         window.location.reload();
+        setLoading(false)
       }
+
     } catch(err){
       const resMessage =
             (err.response &&
@@ -42,40 +43,24 @@ const SignIn = ({history}) => {
             err.message ||
             err.toString();
               console.log(err.response)
-          // setLoading(false);
+          setLoading(false);
           setErrorMessage(resMessage);
+        setTimeout(()=>{
+          setErrorMessage("")
+        },2000)
     }
-    
-    
-      // services.signInUser(data)
-      //   .then(()=>{
-      //     console.log("pass")
-          // history.push("/profile");
-          // window.location.reload();
-        // },(error) => {
-        //   const resMessage =
-        //     (error.response &&
-        //       error.response.data &&
-        //       error.response.data.message) ||
-        //     error.message ||
-        //     error.toString();
-        //       console.log(error.response)
-        //   // setLoading(false);
-        //   setErrorMessage(resMessage);
-        // })
-
   };
 
+  //render
   return(
   <VStack h="100%">
-    {/* {userLogged && <Redirect to="/profile"/>} */}
     <Box my="5">
       <Heading size="xl">Sign In</Heading>
     </Box>
     {
       errorMessage && (
         <Box my="4">
-          <Alert>
+          <Alert status="error">
             <AlertDescription>{errorMessage}</AlertDescription>
           </Alert>
         </Box>
@@ -94,7 +79,7 @@ const SignIn = ({history}) => {
         {errors.password && <AlertMessage message={errors.password.message} />}
 
         <Button type="submit" mt="4" colorScheme="blackAlpha" size="sm">
-          Sign In
+          {loading ?<Spinner/> :"Sign In"}
         </Button>
         <Center mt="2">
           <Button colorScheme="linkedin" variant="link" href="/register" as="a">

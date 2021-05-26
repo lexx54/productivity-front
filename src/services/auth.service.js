@@ -10,21 +10,18 @@ const signUpUser = async (data) => {
   } catch(err){
     logger.error(err.message)
   }
-  
 }
 
 const signInUser = async (data) => {
     const response = await axios.post(URL+"/signin",data);
     localStorage.setItem("identity",JSON.stringify(response.data));
     return response.data 
-
 }
 
 
 const services = {
   signInUser,
   signUpUser,
-
 }
 
 export default services;
