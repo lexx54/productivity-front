@@ -1,7 +1,8 @@
 import { VStack, Button } from "@chakra-ui/react";
 
 
-const Navegation = () => {
+const Navegation = ({logOut,user}) => {
+ 
   return(
     <VStack spacing="4" height="100vh" 
     justify="center" w={["auto","8rem"]} bg="red.600"
@@ -10,18 +11,22 @@ const Navegation = () => {
       <Button variant="link" colorScheme="whiteAlpha" as="a" href="/">
         Home
       </Button>
-      <Button variant="link" colorScheme="whiteAlpha" as="a" href="/register">
+
+      {!user && (
+      <><Button variant="link" colorScheme="whiteAlpha" as="a" href="/register">
         Sign up
       </Button>
 
       <Button variant="outline" colorScheme="whiteAlpha" as="a" href="/login">
         Sign In
       </Button>
-
+      </>)
+      }
 
       {/*User In option*/}
+     { user && (<>
       <Button variant="link" colorScheme="whiteAlpha" as="a" href="/profile">
-        Profile
+        {user.user}
       </Button>
       <Button variant="link" colorScheme="whiteAlpha" as="a" href="#">
         Short Goals
@@ -35,6 +40,10 @@ const Navegation = () => {
       <Button variant="link" colorScheme="whiteAlpha" as="a" href="#">
         Notes
       </Button>
+      <Button variant="outline" colorScheme="whiteAlpha" onClick={logOut}>
+        LogOut
+      </Button>
+      </>)}
     </VStack>
     
   )
