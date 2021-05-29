@@ -15,6 +15,10 @@ const Profile = lazy(()=> import("./pages/Profile"));
 const Footer = lazy(()=> import("./components/Footer"));
 const Register = lazy(()=> import("./pages/Register"));
 const SignIn = lazy(()=> import("./pages/SignIn"));
+const Short = lazy(()=> import("./pages/Short"));
+const Long = lazy(()=> import("./pages/Long"));
+const Budget = lazy(()=> import("./pages/Budget"));
+const Notes = lazy(()=> import("./pages/Notes"));
 
 //color Palette
 //red.500 red.300
@@ -53,6 +57,11 @@ const App = () => {
             <Route exact path="/profile" component={Profile} />
             <Route path="/register" component={Register}/>
             <Route path="/login" component={SignIn}/>
+            <Route path="/login" component={SignIn}/>
+            <Route path="/short" component={Short}/>
+            <Route path="/long" component={Long}/>
+            <Route path="/budget" component={Budget}/>
+            <Route path="/notes" component={Notes}/>
           </Switch>
         </Suspense>
       </GridItem>

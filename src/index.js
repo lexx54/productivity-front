@@ -11,6 +11,17 @@ const theme = extendTheme({
       silver:"#bcb8b1",
       alabaster:"#f4f3ee"
     }
+  },
+  components:{
+    Textarea:{
+      colorSchemes:{
+        "deno":{
+          bg: "red.400",
+          border:"2px",
+          bordeColor:"red"
+        }
+      }
+    }
   }
 })
 
