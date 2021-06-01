@@ -20,7 +20,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 
 import AlertMessage from "../components/AlertMessage";
-// import userServices from "../services/user.service.js";
+import userServices from "../services/user.service.js";
 
 const schema = yup.object().shape({
   title:yup.string().required().min(6).max(20).trim(),
@@ -29,10 +29,10 @@ const schema = yup.object().shape({
   // author:yup.string().required()
 })
 
-const NotesAdder = ({error, userId}) => {
+const NotesAdder = ({error, userId, setNotes}) => {
   
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const {handleSubmit,control,formState:{errors}} = useForm({
+  const {handleSubmit,control,formState:{errors},reset} = useForm({
     resolver:yupResolver(schema)
   })
 
@@ -40,16 +40,25 @@ const NotesAdder = ({error, userId}) => {
     console.log(data);
     
     try{
-      // await userServices.addNote(data);
+      console.log("saving note")
+      await userServices.addNote(data);
+      setNotes(prev => prev+1);
+      reset({
+        title:"",
+        content:"",
+        important:false
+      },
+      {keepDefaultValues:true})
+      onClose();
     }catch(err){
-      // error(err.message)
+      error(err.message)
     }
     
   };
 
   return (
     <>
-      <Button onClick={onOpen}>New Note</Button>
+      <Button onClick={onOpen} colorScheme="blackAlpha">New Note</Button>
 
       <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />

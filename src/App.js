@@ -29,6 +29,7 @@ const App = () => {
   const [currentUser, setCurrentUser] = useState(undefined);
   const {isOpen, onToggle} = useDisclosure();
 
+  console.log("app")
   //functions
   useEffect(()=>{
     const response = userServices.getUserData();

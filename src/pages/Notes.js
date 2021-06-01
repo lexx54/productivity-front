@@ -1,15 +1,18 @@
-import {Box, VStack, Heading} from "@chakra-ui/react";
+import {Box, VStack, Heading, HStack, Flex} from "@chakra-ui/react";
 import userServices from "../services/user.service.js"
 import {useState,useEffect} from "react";
 
 import NotesAdder from "../components/NotesAdder";
+import NotesCard from "../components/NotesCard";
 
 
 const Notes = ()=> {
   const [notes,setNotes]=useState("");
+  const [numOfNotes,setNumOfNotes]=useState(0);
   const [userId, setUserId] = useState("");
   const [errMessage, setErrMessage]=useState("");
   
+  console.log("notes")
 
   useEffect(()=>{
     const bringUserInfo = async() => {
@@ -25,31 +28,33 @@ const Notes = ()=> {
       try{
         const response = await userServices.getUserNotes();
         setNotes(response)
-
       }catch(err){
         setErrMessage(err.message)
       }
     }
     bringNotes();
-  },[notes])
+  },[numOfNotes])
   return(
     <>
     <VStack>
     <Box>
       <Heading size="xl" my="5">Notes</Heading>
-      <NotesAdder error={setErrMessage} userId={userId}/>
+      <NotesAdder error={setErrMessage} userId={userId} setNotes={setNumOfNotes}/>
     </Box>
     {
       errMessage && <p>{errMessage}</p>
     }
+    <Flex direction={["column",null,"row"]} px="4">
     {
-      notes? (<div>{
-        notes.map(note=>{
-          return (<p>{note.title}</p>)
+      notes? (
+        notes.map( note => {
+          return <NotesCard data={note} setNotes={setNumOfNotes} 
+          error={setErrMessage}  key={note.id}/>
         })
-        }</div>)
+      )
         :<p>Loading ...</p>
     }
+    </Flex>
     </VStack>
     </>
   )
