@@ -20,17 +20,17 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 
 import AlertMessage from "../components/AlertMessage";
-import userServices from "../services/user.service.js";
+// import userServices from "../services/user.service.js";
 
 const schema = yup.object().shape({
-  title:yup.string().required().min(6).max(16).trim(),
+  title:yup.string().required().min(6).max(20).trim(),
   important:yup.boolean(),
   content:yup.string().required().min(10).max(250).trim()
   // author:yup.string().required()
 })
 
-const NotesAdder = ({error}) => {
-  const userId = userServices.getUserData().id;
+const NotesAdder = ({error, userId}) => {
+  
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {handleSubmit,control,formState:{errors}} = useForm({
     resolver:yupResolver(schema)
@@ -79,11 +79,11 @@ const NotesAdder = ({error}) => {
               )} />
             {errors.content && <AlertMessage message={errors.content.message}/>}
 
-            <Controller control={control} name="important"
-              render={({field})=><Checkbox value="false" {...field} >Important</Checkbox>} />  
+            <Controller control={control} name="important" defaultValue={false}
+              render={({field})=><Checkbox defaultValue="false" {...field} >Important</Checkbox>} />  
 
-            <Controller control={control} name="author"
-              render={({field})=><Input type="hidden" value={userId} {...field} />} />
+            <Controller control={control} name="author" defaultValue={userId}
+              render={({field})=><Input type="hidden" {...field} />} />
             {errors.author && <AlertMessage message={errors.author.message}/>}
             </Box>
           </ModalBody>

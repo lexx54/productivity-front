@@ -30,8 +30,6 @@ const App = () => {
   const {isOpen, onToggle} = useDisclosure();
 
   //functions
-
-
   useEffect(()=>{
     const response = userServices.getUserData();
     setCurrentUser(response);

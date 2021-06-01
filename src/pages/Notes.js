@@ -7,8 +7,18 @@ import NotesAdder from "../components/NotesAdder";
 
 const Notes = ()=> {
   const [notes,setNotes]=useState("");
+  const [userId, setUserId] = useState("");
   const [errMessage, setErrMessage]=useState("");
   
+
+  useEffect(()=>{
+    const bringUserInfo = async() => {
+      const id = await userServices.getUserData().id;
+      setUserId(id);
+      console.log(id)
+    }
+    bringUserInfo();
+  },[])
 
   useEffect(()=>{
     const bringNotes = async () => {
@@ -19,9 +29,7 @@ const Notes = ()=> {
       }catch(err){
         setErrMessage(err.message)
       }
-      
     }
-    
     bringNotes();
   },[notes])
   return(
@@ -29,7 +37,7 @@ const Notes = ()=> {
     <VStack>
     <Box>
       <Heading size="xl" my="5">Notes</Heading>
-      <NotesAdder error={setErrMessage}/>
+      <NotesAdder error={setErrMessage} userId={userId}/>
     </Box>
     {
       errMessage && <p>{errMessage}</p>
