@@ -1,10 +1,6 @@
 import { VStack, Button } from "@chakra-ui/react";
-import userServices from "../services/user.service";
 
-const Navegation = ({user}) => {
-  const logOut = () => {
-    userServices.logOut();
-  };
+const Navegation = ({user,out}) => {
 
   return(
     <VStack spacing="4" height="100vh" 
@@ -49,7 +45,7 @@ const Navegation = ({user}) => {
         Notes
       </Button>
 
-      <Button variant="outline" colorScheme="whiteAlpha" onClick={logOut}>
+      <Button variant="outline" colorScheme="whiteAlpha" onClick={out}>
         LogOut
       </Button>
       </>)}

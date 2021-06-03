@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {Box,Heading, Button, VStack, Center,Alert ,AlertDescription, Spinner} from "@chakra-ui/react";
+import {Box,Heading, Button, VStack, Center, Spinner} from "@chakra-ui/react";
 import { useForm, Controller } from "react-hook-form";
 import { EditIcon } from '@chakra-ui/icons';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -10,7 +10,7 @@ import Password from "../components/Password";
 import AlertMessage from "../components/AlertMessage";
 import NormalInput from "../components/NormalInput";
 
-import services from "../services/auth.service";
+import authServices from "../services/auth.service";
 
 const schema = yup.object().shape({
   user: yup.string().required().min(3).max(10),
@@ -28,7 +28,7 @@ const SignIn = ({history}) => {
   const onSubmit =  async (data) => {
     setLoading(true)
     try{
-      const response = await services.signInUser(data);
+      const response = await authServices.signInUser(data);
       if(response){
         history.push("/profile");
         window.location.reload();
@@ -60,9 +60,7 @@ const SignIn = ({history}) => {
     {
       errorMessage && (
         <Box my="4">
-          <Alert status="error">
-            <AlertDescription>{errorMessage}</AlertDescription>
-          </Alert>
+          <AlertMessage message={errorMessage} />
         </Box>
       )
     }

@@ -1,20 +1,18 @@
 import {Box} from "@chakra-ui/react";
-import userServices from "../services/user.service";
+import {Redirect} from "react-router";
 
 
-const Profile = () => {
-  const user = userServices.getUserData();
+const Profile = ({user}) => {
+
+  if(!user){
+    return <Redirect path="/"/>
+  }
 
   return(
-    <>
-    {user && 
       <Box border="1px" borderColor="red" h="100%">
         <p>{user.name} Profile</p>
       </Box>
-    }
-    </>
-    
-  )
+    )
 }
 
 export default Profile;

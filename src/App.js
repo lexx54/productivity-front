@@ -27,19 +27,30 @@ const Notes = lazy(()=> import("./pages/Notes"));
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState(undefined);
+  const [isLoggingOut,setIsLoggingOut] = useState(false);
   const {isOpen, onToggle} = useDisclosure();
+
 
   console.log("app")
   //functions
+
+  const logOut = () =>{
+    userServices.logOut();
+    setIsLoggingOut(prev => !prev)
+  }
+
   useEffect(()=>{
     const response = userServices.getUserData();
-    setCurrentUser(response);
-  },[])
+    if(response) setCurrentUser(response);
+    else setCurrentUser(undefined)
+  },[isLoggingOut])
+
+
 
   return (
   <Router >
     <Slide direction="left" in={isOpen} style={{ zIndex: 10 }}>
-      <Navegation user={currentUser}/>
+      <Navegation user={currentUser} out={logOut}/>
     </Slide>
 
     <Button colorScheme="red" onClick={onToggle} 
@@ -53,14 +64,13 @@ const App = () => {
         <Suspense fallback={<Loader/>}>
           <Switch>
             <Route exact path="/" component={Home}/>
-            <Route exact path="/profile" component={Profile} />
+            <Route exact path="/profile" render={()=><Profile user={currentUser}/>} />
             <Route path="/register" component={Register}/>
             <Route path="/login" component={SignIn}/>
-            <Route path="/login" component={SignIn}/>
-            <Route path="/short" component={Short}/>
-            <Route path="/long" component={Long}/>
-            <Route path="/budget" component={Budget}/>
-            <Route path="/notes" component={Notes}/>
+            <Route path="/short" render={()=><Short user={currentUser}/>}/>
+            <Route path="/long" render={()=><Long user={currentUser}/>}/>
+            <Route path="/budget" render={()=><Budget user={currentUser}/>}/>
+            <Route path="/notes" render={()=><Notes user={currentUser}/>}/>
           </Switch>
         </Suspense>
       </GridItem>

@@ -1,12 +1,13 @@
 import {Box, VStack, Heading, HStack, Flex} from "@chakra-ui/react";
 import userServices from "../services/user.service.js"
 import {useState,useEffect} from "react";
+import { Redirect } from "react-router";
 
 import NotesAdder from "../components/NotesAdder";
 import NotesCard from "../components/NotesCard";
 
 
-const Notes = ()=> {
+const Notes = ({user})=> {
   const [notes,setNotes]=useState("");
   const [numOfNotes,setNumOfNotes]=useState(0);
   const [userId, setUserId] = useState("");
@@ -34,6 +35,11 @@ const Notes = ()=> {
     }
     bringNotes();
   },[numOfNotes])
+
+  if(!user){
+    return <Redirect path="/"/>
+  }
+
   return(
     <>
     <VStack>

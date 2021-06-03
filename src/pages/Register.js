@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {Box,Heading, Button, VStack, Center, } from "@chakra-ui/react";
 import { useForm, Controller } from "react-hook-form";
 import { EmailIcon, EditIcon } from '@chakra-ui/icons'
@@ -6,7 +7,7 @@ import Password from "../components/Password";
 import AlertMessage from "../components/AlertMessage";
 import NormalInput from "../components/NormalInput";
 
-// import services from "../services";
+import authServices from "../services/auth.service";
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
@@ -20,16 +21,16 @@ const schema = yup.object().shape({
 
 
 const Register = () => {
-  // const [errorMessage, setErrorMessage]=useState("");
+  const [errorMessage, setErrorMessage]=useState("");
   const {handleSubmit,control,formState:{errors}}=useForm({
     resolver: yupResolver(schema)
   });
   const onSubmit = async (data) => {
     console.log(data);
     try{
-      // await services.addUser(data);
+      await authServices.signUpUser(data);
     }catch(err){
-      // setErrorMessage(err.message)
+      setErrorMessage(err.message)
     }
     
   };
@@ -38,6 +39,14 @@ const Register = () => {
       <Box my="5">
         <Heading size="2xl">Register</Heading>
       </Box>
+
+      {
+      errorMessage && (
+        <Box my="4">
+          <AlertMessage message={errorMessage} />
+        </Box>
+      )
+    }
 
       <Box as="form" width={["80%",null,"400px"]} border="2px" 
       borderColor="brand.lava" py="5" px="3" borderRadius="10px"
