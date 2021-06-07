@@ -16,23 +16,31 @@ const schema = yup.object().shape({
   name: yup.string().required().min(4).trim(),
   user: yup.string().required().min(3).max(10),
   password: yup.string().required().min(3).max(8),
-  email:yup.string().email(),
+  email:yup.string().email().required(),
 })
 
 
-const Register = () => {
+const Register = ({history}) => {
   const [errorMessage, setErrorMessage]=useState("");
+  const [successMessage, setSuccesMessage]=useState("");
   const {handleSubmit,control,formState:{errors}}=useForm({
     resolver: yupResolver(schema)
   });
   const onSubmit = async (data) => {
     console.log(data);
     try{
-      await authServices.signUpUser(data);
+      const res = await authServices.signUpUser(data);
+      setSuccesMessage(res.message);
+      setTimeout(() => {
+        history.push("/login")
+      }, 2000);
     }catch(err){
-      setErrorMessage(err.message)
+      console.log(err.response)
+      setErrorMessage(err.response.data.message)
+      setTimeout(() => {
+        setErrorMessage("")
+      }, 2000);
     }
-    
   };
   return(
     <VStack h="100%">
@@ -44,6 +52,13 @@ const Register = () => {
       errorMessage && (
         <Box my="4">
           <AlertMessage message={errorMessage} />
+        </Box>
+      )
+    }
+    {
+      successMessage && (
+        <Box my="4">
+          {successMessage}
         </Box>
       )
     }
