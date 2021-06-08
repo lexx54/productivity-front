@@ -29,12 +29,12 @@ const Navegation = ({user,out}) => {
         {user.user}
       </Button>
 
-      <Button variant="link" colorScheme="whiteAlpha" as="a" href="/short">
-        Short Goals
+      <Button variant="link" colorScheme="whiteAlpha" as="a" href="/goals">
+        Goals
       </Button>
 
-      <Button variant="link" colorScheme="whiteAlpha" as="a" href="/long">
-        Long Goals
+      <Button variant="link" colorScheme="whiteAlpha" as="a" href="/journal">
+        Journal
       </Button>
 
       <Button variant="link" colorScheme="whiteAlpha" as="a" href="/budget">

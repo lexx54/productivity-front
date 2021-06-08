@@ -36,9 +36,7 @@ const Notes = ({user})=> {
     bringNotes();
   },[numOfNotes])
 
-  if(!user){
-    return <Redirect path="/"/>
-  }
+  if(!user) return <Redirect path="/"/>;
 
   return(
     <>

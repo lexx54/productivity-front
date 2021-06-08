@@ -15,8 +15,8 @@ const Profile = lazy(()=> import("./pages/Profile"));
 const Footer = lazy(()=> import("./components/Footer"));
 const Register = lazy(()=> import("./pages/Register"));
 const SignIn = lazy(()=> import("./pages/SignIn"));
-const Short = lazy(()=> import("./pages/Short"));
-const Long = lazy(()=> import("./pages/Long"));
+const Goals = lazy(()=> import("./pages/Goals"));
+const Journal = lazy(()=> import("./pages/Journal"));
 const Budget = lazy(()=> import("./pages/Budget"));
 const Notes = lazy(()=> import("./pages/Notes"));
 
@@ -67,8 +67,8 @@ const App = () => {
             <Route exact path="/profile" render={()=><Profile user={currentUser}/>} />
             <Route path="/register" component={Register}/>
             <Route path="/login" component={SignIn}/>
-            <Route path="/short" render={()=><Short user={currentUser}/>}/>
-            <Route path="/long" render={()=><Long user={currentUser}/>}/>
+            <Route path="/goals" render={()=><Goals user={currentUser}/>}/>
+            <Route path="/journal" render={()=><Journal user={currentUser}/>}/>
             <Route path="/budget" render={()=><Budget user={currentUser}/>}/>
             <Route path="/notes" render={()=><Notes user={currentUser}/>}/>
           </Switch>
