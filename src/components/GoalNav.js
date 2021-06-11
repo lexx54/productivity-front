@@ -7,7 +7,7 @@ const GoalNav = () => {
 
   const {url} = useRouteMatch();
   return(
-  <HStack>
+  <HStack as="nav">
     <TabList>
       <Tab>
         <Link as={RL} to={`${url}/short`}>Short Run</Link>

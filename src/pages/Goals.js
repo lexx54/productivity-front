@@ -11,13 +11,13 @@ const Goals = ({user})=> {
   if(!user ) return <Redirect path="/"/>;
 
   return(
-    <Tabs isLazy>
-    <VStack>
+    <Tabs isLazy  id="upper" height="100%">
+    <VStack id="container" height="inherit">
       <HStack>
         <Heading>Goals</Heading>
       </HStack>
       <GoalNav />
-      <Box>
+      <Box height="auto" width="100%" border="1px" borderColor="yellow">
       <Switch>
         <Suspense fallback={<p>Loading Goals</p>}>
           <Route path={`${path}/:time`} children={<Time />}/>
